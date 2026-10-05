@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Таверна Чудес — D&D сообщество, мастера и приключения.">
+  <title>Таверна Чудес — D&D сообщество</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #100b09;
+  --bg2: #19100c;
+  --panel: rgba(40, 24, 16, .82);
+  --panel2: #26170f;
+  --wood: #3b2114;
+  --gold: #d9a44a;
+  --gold2: #f0c66c;
+  --ember: #a84d28;
+  --cream: #ead8b9;
+  --muted: #a99276;
+  --line: rgba(217, 164, 74, .25);
+  --danger: #c35c4e;
+  --green: #71975e;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 75% 15%, rgba(161, 70, 28, .15), transparent 28%),
+    radial-gradient(circle at 15% 50%, rgba(217, 164, 74, .06), transparent 25%),
+    linear-gradient(180deg, #0d0807, #1a100c 45%, #0d0807);
+  font-family: Inter, system-ui, sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  opacity: .15;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px, transparent 1px, transparent 4px);
+}
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+.site-header {
+  height: 78px; padding: 0 5vw; display: flex; align-items: center;
+  justify-content: space-between; border-bottom: 1px solid rgba(217,164,74,.16);
+  background: rgba(10,7,6,.82); backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 11px; min-width:0; }
+.site-logo { width: 76px; height: 52px; object-fit: contain; object-position: center; filter: drop-shadow(0 0 12px rgba(217,164,74,.18)); }
+.brand-copy { display:block; }
+.brand b { display:block; font: 700 18px Cinzel, serif; letter-spacing: .03em; }
+.brand small { display:block; color: var(--muted); font-size: 10px; margin-top: 3px; letter-spacing: .12em; text-transform: uppercase; }
+nav { display:flex; gap: 25px; align-items:center; }
+nav a { color:#cbb99d; font-size: 13px; transition:.2s; }
+nav a:hover { color:var(--gold2); }
+.owner-link { border-left:1px solid var(--line); padding-left:25px; }
+
+.quote { text-align:center; max-width:850px; }
+.quote-mark { font:100px Georgia,serif; color:var(--gold); opacity:.5; height:65px; }
+blockquote { font:italic 28px/1.6 Georgia,serif; color:#d6c4a7; margin:0 0 20px; }
+.quote > span { color:#846d50; font-size:12px; }
+
+.section { width:min(1160px, 90%); margin:auto; padding: 105px 0; }
+.hero { min-height: 720px; display:grid; grid-template-columns: 1.25fr .75fr; align-items:center; gap:50px; padding-top:80px; }
+.eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.2em; font-size:11px; font-weight:700; }
+h1,h2,h3 { font-family:Cinzel, Georgia, serif; }
+.hero h1 { font-size:clamp(48px, 7vw, 88px); line-height:.98; margin:18px 0 25px; letter-spacing:-.04em; }
+.hero h1 span { color:var(--gold2); text-shadow: 0 0 35px rgba(217,164,74,.12); }
+.hero p { max-width:610px; color:#b9a58c; line-height:1.85; font-size:16px; }
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-top:35px; }
+
+.btn {
+  border:1px solid var(--line); padding:13px 20px; border-radius:4px; cursor:pointer;
+  color:var(--cream); background:transparent; transition:.2s; font-weight:600;
+}
+.btn-primary { background:linear-gradient(135deg,#a9602c,#c7863b); color:#160c07; border-color:#d9a44a; box-shadow:0 8px 30px rgba(132,62,28,.22); }
+.btn-primary:hover { transform:translateY(-2px); filter:brightness(1.1); }
+.btn-ghost:hover { background:rgba(217,164,74,.08); border-color:var(--gold); color:var(--gold2); }
+.small-btn { padding:9px 15px; }
+
+.tavern-sign { display:flex; justify-content:center; }
+.hero-logo-frame {
+  position:relative; width:min(500px,100%); min-height:390px; display:flex; flex-direction:column;
+  justify-content:center; align-items:center; text-align:center; padding:35px;
+  border:1px solid rgba(217,164,74,.28); border-radius:10px;
+  background:radial-gradient(circle at 50% 45%, rgba(112,58,25,.32), rgba(25,14,9,.12) 62%, transparent 74%);
+  box-shadow:0 20px 80px rgba(0,0,0,.42), inset 0 0 70px rgba(217,164,74,.025);
+  transform:rotate(-1.5deg);
+}
+.hero-logo-frame::before, .hero-logo-frame::after {
+  content:""; position:absolute; width:58px; height:58px; border-color:rgba(217,164,74,.42); border-style:solid;
+}
+.hero-logo-frame::before { left:18px; top:18px; border-width:1px 0 0 1px; }
+.hero-logo-frame::after { right:18px; bottom:18px; border-width:0 1px 1px 0; }
+.hero-logo-glow { position:absolute; width:260px; height:260px; border-radius:50%; background:rgba(217,164,74,.08); filter:blur(35px); }
+.hero-logo { position:relative; z-index:1; width:min(430px,100%); height:auto; display:block; filter:drop-shadow(0 16px 30px rgba(0,0,0,.4)); }
+.hero-logo-caption { position:relative; z-index:1; margin-top:-8px; color:#8f7659; font-size:10px; letter-spacing:.28em; text-transform:uppercase; }
+
+.section-heading { max-width:720px; margin-bottom:45px; }
+.section-heading h2 { font-size:clamp(32px,4vw,52px); margin:12px 0; }
+.section-heading p { color:var(--muted); line-height:1.7; }
+
+.feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.feature-card, .master-card {
+  background:linear-gradient(145deg, rgba(59,33,20,.8), rgba(27,16,11,.88));
+  border:1px solid var(--line); padding:30px; position:relative; overflow:hidden;
+}
+.feature-card::before, .master-card::before {
+  content:""; position:absolute; top:0; left:0; width:55px; height:2px; background:var(--gold);
+}
+.icon { font-size:32px; color:var(--gold2); margin-bottom:22px; }
+.feature-card h3 { font-size:20px; }
+.feature-card p { color:var(--muted); line-height:1.7; font-size:14px; }
+
+.booking { position:relative; }
+.parchment-form {
+  background:linear-gradient(135deg, rgba(60,36,22,.95), rgba(30,18,12,.96));
+  border:1px solid rgba(217,164,74,.32); box-shadow:0 20px 70px rgba(0,0,0,.3);
+  padding:38px; border-radius:5px;
+}
+.form-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+label { display:block; margin-bottom:22px; }
+label span { display:block; color:#cdbb9f; font-size:12px; margin-bottom:8px; }
+label em { color:var(--gold2); font-style:normal; }
+input, select, textarea {
+  width:100%; border:1px solid rgba(217,164,74,.2); background:#17100c; color:var(--cream);
+  padding:13px 14px; border-radius:3px; outline:none; transition:.2s;
+}
+textarea { resize:vertical; }
+input:focus, select:focus, textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(217,164,74,.06); }
+.submit-btn { margin-top:3px; }
+.form-message { min-height:22px; margin-top:15px; color:var(--muted); font-size:13px; }
+.form-message.success { color:#9bc17d; }
+.form-message.error { color:#e38b78; }
+
+ .master-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+
+.master-card {
+  appearance:none; width:100%; text-align:left; color:inherit; font:inherit; cursor:pointer;
+  background:linear-gradient(145deg, rgba(59,33,20,.8), rgba(27,16,11,.88));
+  border:1px solid var(--line); padding:14px; position:relative; overflow:hidden;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.master-card::before {
+  content:""; position:absolute; top:0; left:0; width:55px; height:2px; background:var(--gold);
+}
+.master-card:hover {
+  transform:translateY(-5px); border-color:rgba(217,164,74,.6);
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+}
+.master-avatar {
+  width:100%; aspect-ratio:1; display:block; object-fit:cover; border:1px solid var(--line);
+  background:#1b0e09;
+}
+.master-card-info { padding:14px 2px 4px; }
+.master-card-info h3 { margin:0 0 5px; font-size:21px; }
+.master-genre { color:var(--gold); font-size:11px; margin:0 0 10px; min-height:30px; }
+.master-price { color:#e0c48c; font-size:13px; }
+.master-card-arrow {
+  position:absolute; right:14px; bottom:14px; color:var(--gold2); opacity:.7;
+  transition:transform .2s;
+}
+.master-card:hover .master-card-arrow { transform:translate(2px,-2px); }
+
+.booking-card {
+  position:relative; overflow:hidden; display:grid; grid-template-columns:92px 1fr; gap:28px; align-items:center;
+  padding:42px 46px; background:linear-gradient(135deg, rgba(60,36,22,.95), rgba(28,16,11,.98));
+  border:1px solid rgba(217,164,74,.34); border-radius:7px;
+  box-shadow:0 20px 70px rgba(0,0,0,.32), inset 0 0 60px rgba(217,164,74,.025);
+}
+.booking-card::before { content:""; position:absolute; inset:12px; border:1px solid rgba(217,164,74,.09); pointer-events:none; }
+.booking-ornament { position:relative; width:76px; height:76px; display:grid; place-items:center; border:1px solid rgba(217,164,74,.38); border-radius:50%; color:var(--gold2); font-size:30px; box-shadow:0 0 30px rgba(217,164,74,.08); }
+.booking-kicker { color:var(--gold); text-transform:uppercase; letter-spacing:.18em; font-size:10px; font-weight:700; }
+.booking-card h3 { margin:9px 0 9px; font-size:28px; color:#e8d2aa; }
+.booking-card p { margin:0; max-width:720px; color:var(--muted); line-height:1.7; font-size:14px; }
+.booking-btn { display:inline-flex; align-items:center; gap:12px; margin-top:25px; }
+.booking-btn span { font-size:16px; transition:transform .2s; }
+.booking-btn:hover span { transform:translate(2px,-2px); }
+.footer-logo { width:50px; height:34px; object-fit:contain; filter:drop-shadow(0 0 10px rgba(217,164,74,.12)); }
+
+.master-modal { position:fixed; inset:0; z-index:100; display:none; }
+.master-modal.is-open { display:block; }
+.modal-backdrop {
+  position:absolute; inset:0; background:rgba(4,2,1,.78); backdrop-filter:blur(7px);
+  animation:modalFade .2s ease;
+}
+.master-modal-panel {
+  position:relative; width:min(760px, calc(100% - 30px)); max-height:calc(100vh - 40px);
+  overflow:auto; margin:20px auto; top:50%; transform:translateY(-50%);
+  background:linear-gradient(145deg,#3a2115,#1a0f0b 72%); border:1px solid rgba(217,164,74,.48);
+  box-shadow:0 35px 100px rgba(0,0,0,.7), inset 0 0 70px rgba(10,4,1,.3);
+  padding:34px; animation:modalIn .3s cubic-bezier(.2,.8,.2,1);
+}
+.modal-close {
+  position:absolute; right:17px; top:12px; width:38px; height:38px; border:1px solid var(--line);
+  border-radius:50%; background:rgba(12,7,4,.5); color:var(--cream); font-size:27px;
+  cursor:pointer; z-index:2; transition:.2s;
+}
+.modal-close:hover { color:var(--gold2); border-color:var(--gold); transform:rotate(90deg); }
+.modal-top { display:grid; grid-template-columns:150px 1fr; gap:25px; align-items:center; }
+.modal-avatar {
+  width:150px; height:150px; object-fit:cover; border:1px solid var(--line);
+  box-shadow:0 12px 35px rgba(0,0,0,.4);
+}
+
+footer { border-top:1px solid rgba(217,164,74,.14); padding:30px 5vw; display:flex; align-items:center; justify-content:space-between; color:#776650; font-size:11px; gap:20px; }
+.footer-brand b { color:#b6a184; }
+.footer-brand .brand-mark { font-size:20px; }
+
+.modal-name { margin:9px 0 3px; font-size:38px; }
+.modal-nickname { color:#9c876c; font-size:12px; margin:0 0 8px; }
+.modal-social { color:var(--gold2); font-size:12px; }
+.modal-price-row {
+  display:flex; justify-content:space-between; gap:15px; align-items:center;
+  border-top:1px solid rgba(217,164,74,.15); border-bottom:1px solid rgba(217,164,74,.15);
+  padding:18px 0; margin:27px 0 22px; color:var(--gold);
+}
+.modal-price { color:#e5c27e; }
+.modal-details { display:grid; gap:18px; }
+.modal-detail > span {
+  display:block; color:#876f53; font-size:10px; text-transform:uppercase; letter-spacing:.13em; margin-bottom:8px;
+}
+.modal-detail p { color:#b9a58b; line-height:1.75; font-size:14px; margin:0; }
+.modal-hb strong { color:#9bc17d; font-size:13px; }
+.modal-description { padding-top:3px; }
+body.modal-open { overflow:hidden; }
+
+@keyframes modalFade { from {opacity:0} to {opacity:1} }
+@keyframes modalIn {
+  from { opacity:0; transform:translateY(-46%) scale(.94); }
+  to { opacity:1; transform:translateY(-50%) scale(1); }
+}
+
+@media (max-width: 850px) {
+  nav { display:none; }
+  .hero { grid-template-columns:1fr; min-height:auto; padding-top:65px; }
+  .tavern-sign { margin-top:25px; }
+  .booking-card { grid-template-columns:1fr; padding:32px 24px; }
+  .booking-ornament { width:62px; height:62px; }
+  .feature-grid { grid-template-columns:1fr; }
+  .master-grid { grid-template-columns:repeat(2,1fr); }
+  .modal-top { grid-template-columns:110px 1fr; }
+  .modal-avatar { width:110px; height:110px; }
+  .modal-name { font-size:30px; }
+  .form-grid { grid-template-columns:1fr; gap:0; }
+  .section { padding:75px 0; }
+  .dashboard-top { align-items:flex-start; flex-direction:column; }
+  .stats { grid-template-columns:1fr; }
+  footer { flex-direction:column; align-items:flex-start; }
+}
+@media (max-width: 520px) {
+  .site-header { height:68px; }
+  .site-logo { width:62px; height:44px; }
+  .brand-copy b { font-size:14px; }
+  .brand-copy small { display:none; }
+  .hero-logo-frame { min-height:300px; padding:24px; }
+  .hero-logo-caption { font-size:8px; }
+  .hero h1 { font-size:46px; }
+  .parchment-form { padding:22px; }
+  .master-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .master-card { padding:10px; }
+  .master-card-info h3 { font-size:17px; }
+  .master-genre { font-size:10px; }
+  .master-price { font-size:11px; }
+  .master-modal-panel { padding:24px 18px; }
+  .modal-top { grid-template-columns:1fr; }
+  .modal-avatar { width:110px; height:110px; }
+  .modal-name { font-size:28px; }
+}
+</style>
+</head>
+<body>
+  <div class="embers" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Таверна Чудес">
+      <img class="site-logo" src="tavern-logo.png" alt="Таверна Чудес — логотип">
+      <span class="brand-copy">
+        <b>Таверна Чудес</b>
+        <small>D&D • Приключения • Легенды</small>
+      </span>
+    </a>
+    <nav>
+      <a href="#home">Главная</a>
+      <a href="#booking">Запись</a>
+      <a href="#masters">Мастера</a>
+      
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="hero-copy">
+        <div class="eyebrow">⚔ Добро пожаловать, путник ⚔</div>
+        <h1>Там, где<br><span>начинаются легенды</span></h1>
+        <p>
+          Собирай отряд, выбирай мастера и отправляйся навстречу приключению.
+          В «Таверне Чудес» каждый вечер может стать началом новой истории.
+        </p>
+        <div class="hero-actions">
+          <a href="#booking" class="btn btn-primary">Вписать себя в историю</a>
+          <a href="#masters" class="btn btn-ghost">Познакомиться с мастерами</a>
+        </div>
+      </div>
+
+      <div class="tavern-sign">
+        <div class="hero-logo-frame">
+          <div class="hero-logo-glow"></div>
+          <img src="tavern-logo.png" alt="Логотип Таверны Чудес" class="hero-logo">
+          <span class="hero-logo-caption">D&amp;D • Приключения • Легенды</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="features section">
+      <div class="section-heading">
+        <span class="eyebrow">Почему мы</span>
+        <h2>Уютная Таверна для больших приключений</h2>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="icon">♜</div>
+          <h3>Живые мастера</h3>
+          <p>Опытные ведущие со своим стилем, любимыми сеттингами и атмосферой.</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon">☽</div>
+          <h3>Игры по записи</h3>
+          <p>Оставьте анкету персонажа через форму — и будьте уверены, приключения найдут вас сами</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon">⚗</div>
+          <h3>Своя история</h3>
+          <p>От героического фэнтези до мрачных подземелий и безумных one-shot.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="booking" class="booking section">
+      <div class="section-heading">
+        <span class="eyebrow">Книга записей</span>
+        <h2>Появление в мире Меча и Магии</h2>
+        <p>Откройте Яндекс Форму, и дайте миру знать, кто вы! — и приключения сами найдут вас, путники!</p>
+      </div>
+
+      <div class="booking-card">
+        <div class="booking-ornament">✦</div>
+        <div>
+          <span class="booking-kicker">Книга записей открыта</span>
+          <h3>Готовы отправиться в приключение?</h3>
+          <p>Нажмите на кнопку ниже, чтобы открыть форму записи в новом окне.</p>
+          <a class="btn btn-primary booking-btn" href="https://forms.yandex.ru/u/68544a28d04688c03d6f8139" target="_blank" rel="noopener noreferrer">
+            Открыть Яндекс Форму <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="masters" class="masters section">
+      <div class="section-heading">
+        <span class="eyebrow">Хозяева историй</span>
+        <h2>Мастера</h2>
+        <p>Нажмите на карточку, чтобы узнать больше о мастере, его системах и формате игр.</p>
+      </div>
+      <div id="mastersGrid" class="master-grid"></div>
+    </section>
+
+    <div id="masterModal" class="master-modal" role="dialog" aria-modal="true" aria-labelledby="masterModalTitle">
+      <div class="modal-backdrop"></div>
+      <div class="master-modal-panel">
+        <button class="modal-close" type="button" aria-label="Закрыть">×</button>
+        <div class="modal-top">
+          <img class="modal-avatar" src="" alt="">
+          <div>
+            <span class="eyebrow">Мастер «Таверны Чудес»</span>
+            <h2 id="masterModalTitle" class="modal-name"></h2>
+            <p class="modal-nickname"></p>
+            <a class="modal-social" href="#" target="_blank" rel="noopener"></a>
+          </div>
+        </div>
+
+        <div class="modal-price-row">
+          <span class="modal-genre"></span>
+          <strong class="modal-price"></strong>
+        </div>
+
+        <div class="modal-details">
+          <div class="modal-detail">
+            <span>Жанры игр</span>
+            <div class="tags modal-genres"></div>
+          </div>
+          <div class="modal-detail">
+            <span>Системы</span>
+            <div class="tags modal-systems"></div>
+          </div>
+          <div class="modal-detail modal-hb">
+            <span>Разрешает HB / Homebrew</span>
+            <strong class="modal-homebrew"></strong>
+          </div>
+          <div class="modal-detail modal-description">
+            <span>О мастере</span>
+            <p class="modal-bio"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="quote section">
+      <div class="quote-mark">“</div>
+      <blockquote>
+        В каждой таверне есть незнакомец, который однажды станет героем твоей истории.
+      </blockquote>
+      <span>— старая поговорка авантюристов</span>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand footer-brand">
+      <span class="brand-mark">✦</span>
+      <span><b>Таверна Чудес</b><small>D&D Community</small></span>
+    </div>
+    <span>© 2026 «Таверна Чудес»</span>
+
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
